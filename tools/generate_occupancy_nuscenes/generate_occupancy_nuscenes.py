@@ -466,6 +466,12 @@ def save_ply(points, name):
 if __name__ == '__main__':
     from argparse import ArgumentParser
     parse = ArgumentParser()
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    def resolve_path(path):
+        if os.path.isabs(path) or os.path.exists(path):
+            return path
+        return os.path.join(script_dir, path)
 
     parse.add_argument('--dataset', type=str, default='nuscenes')
     parse.add_argument('--config_path', type=str, default='config.yaml')
@@ -474,9 +480,13 @@ if __name__ == '__main__':
     parse.add_argument('--start', type=int, default=0)
     parse.add_argument('--end', type=int, default=850)
     parse.add_argument('--dataroot', type=str, default='./data/nuScenes/')
+    parse.add_argument('--version', type=str, default='v1.0-trainval')
     parse.add_argument('--nusc_val_list', type=str, default='./nuscenes_val_list.txt')
     parse.add_argument('--label_mapping', type=str, default='nuscenes.yaml')
     args=parse.parse_args()
+    args.config_path = resolve_path(args.config_path)
+    args.nusc_val_list = resolve_path(args.nusc_val_list)
+    args.label_mapping = resolve_path(args.label_mapping)
 
 
     if args.dataset=='nuscenes':
@@ -486,7 +496,7 @@ if __name__ == '__main__':
                 val_list.append(item[:-1])
         file.close()
 
-        nusc = NuScenes(version='v1.0-trainval',
+        nusc = NuScenes(version=args.version,
                         dataroot=args.dataroot,
                         verbose=True)
         train_scenes = splits.train
