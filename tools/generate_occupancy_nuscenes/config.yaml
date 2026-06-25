@@ -2,8 +2,19 @@
 'min_density': 0.1
 'n_threads': -1
 'downsample': False
-'voxel_size': 0.5
+# 'voxel_size': 0.5
+'voxel_size': 0.4
 'max_nn': 20
-'pc_range':  [-50, -50, -5, 50, 50, 3]
+# 'pc_range':  [-50, -50, -5, 50, 50, 3]
+'pc_range': [-40, -40, -1, 40, 40, 5.4]
 'occ_size':  [200, 200, 16]
 'self_range': [3.0, 3.0, 3.0]
+'surface_mode': 'vertices'
+'surface_sample_spacing': 0.2
+'flat_height_fill': False
+'flat_fill_radius': 1
+'flat_fill_min_neighbors': 5
+'flat_fill_max_z_spread': 1
+'normal_orientation': 'camera'
+'min_component_triangles': 0
+'reconstruction_mode': 'global'
